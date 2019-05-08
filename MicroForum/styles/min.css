@@ -1,0 +1,49 @@
+﻿body {
+    margin: 0px;
+    padding: 0px;
+    background-color:rgb(200,200,200);
+}
+.header{
+    padding: 5px;
+    background-color: rgb(200,200,200);
+    display:flex;
+}
+.header_logotipo {     
+    flex: 0 0 50%;    
+}
+.header_links {    
+    flex: 1;
+    text-align: right;
+}
+.wrapper{    
+    width: 90%;
+    background-color:white;
+    color: black;
+    margin: auto;
+    padding: 10px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.post_main {
+    width: 100%;
+    border: 1px solid red;
+    margin-top:5px;
+    margin-bottom: 5px;
+    background-color: rgb(220,220,220);
+}
+.post_titulo{
+    font-size: 1.2em;
+    font-weight: bold;
+    color:cornflowerblue;
+}
+
+.footer{
+    padding: 05px;
+    background-color: darkgray;    
+}
+.footer_webmaster{
+    text-align:center;
+    margin:auto;
+    width:20%;    
+}
+

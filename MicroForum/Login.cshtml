@@ -1,0 +1,24 @@
+﻿@{
+    Layout = "~/inc/_layout.cshtml";    
+}
+
+<div class="wrapper">
+ @{ 
+     if (Session["user"] != null)
+     {
+         <p>O usuário @Session["user"] está ativo</p>
+        <p>Clique<a href="~/Logout.cshtml"> AQUI </a>para sair da Sessão</p>
+     }
+     else
+     {
+        <form method="post" action="~/LoginVerificar .cshtml">
+            <p>Usuário.:</p>
+            <input type="text" name="txtUsuario" size="30" maxlength="30">
+            <p>Senha.:</p>
+            <input type="password" name="txtSenha" size="20" maxlength="20">
+            <p><input type="submit" value="Entrar"></p>
+        </form>
+     }
+}
+
+</div>

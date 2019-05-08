@@ -1,0 +1,82 @@
+﻿@{
+    Layout = "~/inc/_layout.cshtml";
+}
+<div class="wrapper">
+
+    @{
+        bool apresentar_formulario = true;
+        bool avancar = true;
+
+        if (IsPost)
+        {
+
+            // tratamento dos dados para criar nova conta
+
+            //
+            //  Receber os dados
+            //
+            string usuario = Request["text_usuario"];
+            string senha_1 = Request["text_senha_1"];
+            string senha_2 = Request["text_senha_2"];
+
+            //  verificações - verifica se os campos foram preenchidos
+            if (
+                (usuario == string.Empty) ||
+                (senha_1 == string.Empty) ||
+                (senha_2 == string.Empty)
+                )
+            {
+                <h1>ATENÇÃO !</h1><p>Preencha Corretamente TODOS os campos</p>
+                avancar = false;
+            }
+            if (avancar)
+            {
+                if (senha_1 != senha_2)
+                {
+                    <p>A senhas não são iguais!</p>
+                    avancar = false;
+                }
+            }
+            if (avancar)
+            {
+
+                //----------------------------------------------
+                // verificar se o usuario já existe na base
+                //----------------------------------------------
+                if (MicroForum.Dados.PesquisarUsuario(usuario) == false)
+                {
+                    avancar = true;
+                }
+                else
+                {
+                    <p>O USUÁRIO JÁ EXISTE! tente outro Login!</p>
+                    avancar = false;
+                }
+            }
+            if (avancar)
+            {
+                if (MicroForum.Dados.IncluirUsuario(usuario, senha_1))
+                {
+                    <p>NOVO USUÁRIO INCLUIDO COM SUCESSO!</p>
+                    <a href="~/Index.cshtml">Voltar!</a>                    
+                    apresentar_formulario = false;
+                }
+            }            
+        }
+        // apresentar o formulario de criacao da conta
+        if (apresentar_formulario)
+        {
+            <h3>Criar Nova Conta de Usuário</h3>
+            <form method="post" action="">
+                <p>Nome do Usuário.:</p> <input type="text" name="text_usuario" size="30" maxlength="30" />
+                <p>Informe a Senha.:</p> <input type="text" name="text_senha_1" size="30" maxlength="30" />
+                <p>Confirme a Senha:</p> <input type="text" name="text_senha_2" size="30" maxlength="30" />
+                
+                <p><input type="submit" value="Criar Nova Conta" /></p>
+            </form>
+            <a href="~/Index.cshtml">Voltar</a>
+        }
+
+    }
+
+</div>

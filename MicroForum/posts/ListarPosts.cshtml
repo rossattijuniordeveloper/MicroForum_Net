@@ -1,0 +1,46 @@
+﻿@{
+    Layout = "~/inc/_layout.cshtml";
+
+    if ((Session["user"] == null))
+    {
+        Response.Redirect("~/index.cshtml");
+    }
+}
+<div class="wrapper">
+    @{ 
+        string NomeUsuario = (string)Session["user"];
+        System.Data.SqlClient.SqlDataReader dr = MicroForum.Dados.RetornarPosts(NomeUsuario, 1);
+    }
+    <h3>Essas são as Postagens do usuário: @Session["user"]</h3>
+    <table>
+        <tr class="post_main">
+            <th>Titulo</th>
+            <th>Mensagem</th>
+            <th>Data da Atualizacao</th>
+            <th></th>
+            <th></th>
+        </tr>
+        @{
+            if (dr != null)
+            {
+                while ((dr.Read()))
+                {
+                    <tr class="post_main">
+                        <td class="post_titulo"> @dr["titulo"]</td>
+                        <td>  @dr["mensagem"]</td>
+                        <td>  @dr["atualizacao"]  </td>
+                        <td id='@dr["id_posts"]'>
+                            <a href="~/posts/GravarApagarPost.cshtml?p=@dr[0]">Excluir
+                            </a>
+                        </td>
+                        <td><a href="~/posts/AlterarPost.cshtml?p=@dr[0]"> Alterar</a></td>
+                    </tr>
+                }
+            }
+        }
+    </table>
+    @{ 
+        MicroForum.Startup.comando.Connection.Close();
+    }
+    <a href="~/Index.cshtml">Voltar</a>
+</div>

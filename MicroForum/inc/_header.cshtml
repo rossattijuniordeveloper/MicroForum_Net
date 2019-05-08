@@ -1,0 +1,31 @@
+﻿<div class="header">
+
+    <!-- Logotipo-->
+    <div class="header_logotipo">
+        <a href="~/Index.cshtml">
+            <img src="~/images/logotipo.png" />
+        </a>
+    </div>
+    <!-- link -->
+    <div class="header_links">
+        @{
+            //if (Request.IsAuthenticated == false)
+            if (Session["user"] == null)
+            {
+                <p>
+                    <a href="~/CriarConta.cshtml"> Criar Nova Conta </a> | 
+                    <a href="~/Login.cshtml">Login </a>                    
+                </p>
+            }
+            else
+            {
+                <p>
+                    Olá,@Session["user"] |
+                    <a href="~/posts/ListarPosts.cshtml">Listar Posts </a> |
+                    <a href="~/posts/NovoPost.cshtml"> Novo Post </a> |
+                    <a href="~/Logout.cshtml">LogOut</a>
+                </p>
+            }
+        }
+    </div>
+</div>

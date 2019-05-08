@@ -1,0 +1,20 @@
+﻿@{
+    if(Session["user"]==null)
+    {
+        //Response.Redirect("~/Index.cshtml");
+    }    
+    Layout = "~/inc/_layout.cshtml";
+}
+<div class="wrapper">
+    <form method="post" action="GravarNovoPost.cshtml">
+        <p>Título:</p>
+        <input type="text" name="txtTitulo"   size="100" maxlength="100"/>
+
+        <p>Mensagem:</p>
+        <textarea cols="100" rows="6" name="txtMensagem"></textarea>
+        <p></p>
+        <input type="submit" value="Postar" />
+    </form>
+    <p></p>
+    <a href="~/Index.cshtml">Voltar</a>
+</div>

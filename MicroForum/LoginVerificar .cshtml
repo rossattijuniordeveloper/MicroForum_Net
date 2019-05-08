@@ -1,0 +1,54 @@
+﻿@{
+    Layout = "~/inc/_layout.cshtml";
+}
+
+<div class="wrapper">
+    @{
+        if (!IsPost)
+        {
+            Response.Redirect("~/Index.cshtml");
+        }
+
+        // recupera os valores do formulario login
+        string usuario = Request["txtUsuario"];
+        string senha = Request["txtSenha"];
+        bool avancar = true;
+
+        if ((usuario == "") || (senha == ""))
+        {
+            <p>Preencha os campos corretamente.</p>            
+            avancar = false;
+        }
+        if (avancar)
+        {
+            if (!MicroForum.Dados.PesquisarUsuario(usuario))
+            {
+                avancar = false;
+                <p>(usu)Dados do Usuário InVálidos, Tente novamente com Dados VÁLIDOS!</p>
+            }
+        }
+        if (avancar)
+        {
+
+            if (!MicroForum.Dados.VerificarSenha(usuario, senha))
+            {
+                avancar = false;
+                <p>(pass)Dados do Usuário Não Validos, Tente novamente com Dados VÁLIDOS!</p>
+            }
+            else
+            {
+                avancar = true;
+            }
+        }
+        if (avancar)
+        {            
+            Session["user"] = usuario;
+            Response.Redirect("~/Index.cshtml");
+        }
+        else
+        {
+            <a href="~/Login.cshtml">Voltar</a>
+        }
+    }
+
+</div>

@@ -1,0 +1,41 @@
+﻿@{
+    Layout = "~/inc/_layout.cshtml";
+    MicroForum.Dados.IniciarVariaveis();
+}
+
+<div class="wrapper">
+    @{
+        if (Session["user"] != null)
+        {
+            string NomeUsuario = (string)Session["user"];
+            System.Data.SqlClient.SqlDataReader dr = MicroForum.Dados.RetornarPosts(NomeUsuario,0);
+
+            <h5>Ultimas Postagens dos Usuários:</h5> 
+            <table>
+                <tr class="post_main">
+                    <th>Titulo</th>
+                    <th>Mensagem</th>
+                    <th>Data da Atualizacao</th>
+                </tr>
+                @{ 
+                    if (dr != null)
+                    {
+                        while ((dr.Read()))
+                        {
+                          <tr class="post_main">
+                            <td class="post_titulo">  @dr["titulo"]</td>
+                            <td>  @dr["mensagem"]</td> 
+                            <td>  @dr["atualizacao"]  </td>
+                          </tr>
+                        }
+                    }
+                  }
+            </table>
+            MicroForum.Startup.comando.Connection.Close();
+        }
+        else
+        {
+            <p>Micro Forum para Apresentação de Conhecimentos em ASP.NET, com sintaxe Razor versão 3</p>
+        }
+    }
+</div>

@@ -1,0 +1,40 @@
+﻿@{
+    Layout = "~/inc/_layout.cshtml";
+
+    if (Session["user"] == null)
+    {
+       Response.Redirect("~/Index.cshtml");
+    }
+
+        /// carregamento das variaveis locais
+
+        int id_posts = Convert.ToInt16(Request["p"]);
+        string titulo = " -Titulo -  ";
+        string mensagem = " - Mensagem - ";
+
+        System.Data.SqlClient.SqlDataReader dr = MicroForum.Dados.RetornarPost(id_posts);
+        if (dr != null)
+        {
+            while ((dr.Read()))
+            {
+                titulo = dr["titulo"].ToString();
+                mensagem = dr["mensagem"].ToString();
+            }
+        }
+  }
+    
+<div class="wrapper">
+
+    <form method="post" action="GravarAlterarPost.cshtml?p=@id_posts">
+        <!-- <p>idPost: @id_posts.ToString()</p> -->
+        <p>Título:</p>
+        <input type="text" name="txtTitulo" value="@titulo" size="100" maxlength="100" />
+
+        <p>Mensagem:</p>
+        <textarea cols="100" rows="6" name="txtMensagem">@mensagem</textarea>
+        <p></p>
+        <input type="submit" value="Gravar" />
+    </form>
+    <p></p>
+    <a href="~/posts/ListarPosts.cshtml?p=@id_posts">Voltar</a>
+</div>

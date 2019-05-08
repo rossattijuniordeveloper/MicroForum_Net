@@ -1,0 +1,22 @@
+﻿@{ 
+    Layout = "~/inc/_layout.cshtml";
+    if (Session["user"]== null)
+    {
+        Response.Redirect("~/index.cshtml");
+    }
+}
+<div class="wrapper">
+
+    @{
+        int id_posts = Convert.ToInt16(Request["p"]);
+        if (!MicroForum.Dados.ApagarPosts(id_posts))
+        {
+            <h1>ATENÇÃO !</h1><p>Ocorreu um Problema ao APAGAR o POST! Tente novamente!</p>
+            <a href="~/posts/ListarPosts.cshtml?p=@id_posts">Voltar</a>
+        }
+        else
+        {
+            Response.Redirect("~/posts/ListarPosts.cshtml?p=@id_posts");
+        }
+    }
+</div>

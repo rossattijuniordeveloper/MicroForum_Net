@@ -1,0 +1,45 @@
+﻿@{ 
+    Layout = "~/inc/_layout.cshtml";
+    if (Session["user"]== null)
+    {
+        Response.Redirect("~/index.cshtml");
+    }
+}
+<div class="wrapper">
+
+    @{
+        if (!IsPost)
+        {
+            Response.Redirect("~/index.cshtml");
+        }
+        bool avancar = true;
+        string titulo = Request["txtTitulo"];
+        string mensagem = Request["txtMensagem"];
+        string usuario = (string)Session["user"];
+        int id_usuario = 0;
+        id_usuario = MicroForum.Dados.RetornarIdUsuario(usuario);
+        DateTime atualizacao = DateTime.Now;
+
+        if ((titulo == string.Empty) || (mensagem == string.Empty))
+        {
+            <h1>ATENÇÃO !</h1><p>Preencha Corretamente TODOS os campos</p>
+            avancar = false;
+        }
+        if (avancar)
+        {
+            if (!MicroForum.Dados.IncluirPosts(id_usuario, titulo, mensagem, atualizacao))
+            {
+                <h1>ATENÇÃO !</h1><p>Ocorreu um Problema ao gravar o POST! Tente novamente!</p>
+                avancar = false;
+            }
+            else
+            {
+                <h1>ATENÇÃO !</h1><p>Post gravado com SUCESSO!</p>
+            }
+        }
+        <a href="~/posts/NovoPost.cshtml">Voltar</a>
+    }
+
+
+
+</div>

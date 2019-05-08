@@ -1,0 +1,18 @@
+﻿@{
+    Layout = "~/inc/_layout.cshtml";
+}
+<div>
+    @{
+        if (Session["user"] != null)
+        {
+            <p>Até a próxima visita! @Session["user"] .</p>
+            // desconectar o usuario
+            Session.Abandon();
+            Response.Redirect("~/Login.cshtml");
+        }
+        else
+        {
+            Response.Redirect("Index.cshtml");
+        }
+    }
+</div>
